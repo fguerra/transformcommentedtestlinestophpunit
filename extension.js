@@ -53,11 +53,12 @@ function activate(context) {
 
 
 function getFormattedLineForUnitTest(lineText) {
-    const regex = /\/\/\s?test\s(.*)/i;
+    const regex = /(^[\t\s]*)\/\/\s?test\s(.*)/i;
     const matches = regex.exec(lineText);
-    if (matches && matches.length > 1) {
-        const functionName = getCamelCasedString(matches[1]);
-        return `public function test${functionName}(){\n\t\n}\n\n`;
+    if (matches && matches.length > 2) {
+        const indentation = matches[1];
+        const functionName = getCamelCasedString(matches[2]);
+        return `${indentation}public function test${functionName}() {\n${indentation}\t\n${indentation}}`;
     }
     return lineText;
 }
