@@ -10,7 +10,8 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:testytest.helloWorld"
+    "onCommand:testytest.helloWorld",
+    "onCommand:testytest.transformToUnitTest"
   ],
   "main": "./extension.js",
   "contributes": {
@@ -18,6 +19,10 @@
       {
         "command": "testytest.helloWorld",
         "title": "Hello World"
+      },
+      {
+        "command": "testytest.transformToUnitTest",
+        "title": "Transform to Unit Test"
       }
     ]
   },
