@@ -29,38 +29,44 @@ function activate(context) {
 
 
 	let transformToUnitTestDisposable = vscode.commands.registerCommand('testytest.transformToUnitTest', function () {
-        const editor = vscode.window.activeTextEditor;
-        if (editor) {
-            const document = editor.document;
-            const selection = editor.selection;
+		const editor = vscode.window.activeTextEditor;
+		if (editor) {
+			const document = editor.document;
+			const selection = editor.selection;
+			const { fileName } = document;
 
-            const { start, end } = selection;
-            const selectedLines = [];
-            for (let lineIndex = start.line; lineIndex <= end.line; lineIndex++) {
-                selectedLines.push(document.lineAt(lineIndex));
-            }
+			// Check if the file is a PHP file and the name ends with "Test.php"
+			if (document.languageId === 'php' && fileName.endsWith('Test.php')) {
+				const { start, end } = selection;
+				const selectedLines = [];
+				for (let lineIndex = start.line; lineIndex <= end.line; lineIndex++) {
+					selectedLines.push(document.lineAt(lineIndex));
+				}
 
-            const transformedLines = selectedLines.map(line => {
-                const text = line.text;
-                const transformedLine = getFormattedLineForUnitTest(text);
-                return transformedLine !== text ? transformedLine : undefined;
-            }).filter(Boolean);
+				const transformedLines = selectedLines.map(line => {
+					const text = line.text;
+					const transformedLine = getFormattedLineForUnitTest(text);
+					return transformedLine !== text ? transformedLine : undefined;
+				}).filter(Boolean);
 
-            if (transformedLines.length > 0) {
-                const edit = new vscode.WorkspaceEdit();
-                transformedLines.forEach((transformedLine, index) => {
-                    const line = selectedLines[index];
-                    edit.replace(document.uri, line.range, transformedLine);
-                });
-                vscode.workspace.applyEdit(edit);
-                vscode.window.showInformationMessage(`Transformed ${transformedLines.length} line(s) to PHP unit test functions`);
-            } else {
-                vscode.window.showInformationMessage('No lines containing "//test" or "// test" found');
-            }
-        }
-    });
+				if (transformedLines.length > 0) {
+					const edit = new vscode.WorkspaceEdit();
+					transformedLines.forEach((transformedLine, index) => {
+						const line = selectedLines[index];
+						edit.replace(document.uri, line.range, transformedLine);
+					});
+					vscode.workspace.applyEdit(edit);
+					vscode.window.showInformationMessage(`Transformed ${transformedLines.length} line(s) to PHP unit test functions`);
+				} else {
+					vscode.window.showInformationMessage('No lines containing "//test" or "// test" found');
+				}
+			} else {
+				vscode.window.showInformationMessage('This command can only be executed in PHP files ending with "Test.php"');
+			}
+		}
+	});
 
-    context.subscriptions.push(disposable, transformToUnitTestDisposable);
+	context.subscriptions.push(transformToUnitTestDisposable);
 }
 
 function getFormattedLineForUnitTest(lineText) {
