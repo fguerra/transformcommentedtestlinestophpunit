@@ -8,37 +8,31 @@ const vscode = require('vscode');
 /**
  * @param {vscode.ExtensionContext} context
  */
- function activate(context) {
+function activate(context) {
     console.log('Congratulations, your extension "testytest" is now active!');
 
     let disposable = vscode.commands.registerCommand('testytest.transformToUnitTest', function () {
         const editor = vscode.window.activeTextEditor;
         if (editor) {
             const document = editor.document;
-            const selection = editor.selection;
             const { fileName } = document;
 
             // Check if the file is a PHP file and the name ends with "Test.php"
             if (document.languageId === 'php' && fileName.endsWith('Test.php')) {
-                const { start, end } = selection;
-                const selectedLines = [];
-                for (let lineIndex = start.line; lineIndex <= end.line; lineIndex++) {
-                    selectedLines.push(document.lineAt(lineIndex));
-                }
+                const transformedLines = [];
 
-                const transformedLines = selectedLines.map((line, index) => {
-                    const text = line.text;
-                    const transformedLine = getFormattedLineForUnitTest(text);
-                    if (index === selectedLines.length - 1) {
-                        return transformedLine + '\n';
+                for (let lineIndex = 0; lineIndex < document.lineCount; lineIndex++) {
+                    const line = document.lineAt(lineIndex);
+                    const transformedLine = getFormattedLineForUnitTest(line.text);
+                    if (transformedLine !== line.text) {
+                        transformedLines.push({ lineIndex, transformedLine });
                     }
-                    return transformedLine;
-                });
+                }
 
                 if (transformedLines.length > 0) {
                     const edit = new vscode.WorkspaceEdit();
-                    transformedLines.forEach((transformedLine, index) => {
-                        const line = selectedLines[index];
+                    transformedLines.forEach(({ lineIndex, transformedLine }) => {
+                        const line = document.lineAt(lineIndex);
                         edit.replace(document.uri, line.range, transformedLine);
                     });
                     vscode.workspace.applyEdit(edit);
@@ -57,12 +51,13 @@ const vscode = require('vscode');
 
 
 
+
 function getFormattedLineForUnitTest(lineText) {
     const regex = /\/\/\s?test\s(.*)/i;
     const matches = regex.exec(lineText);
     if (matches && matches.length > 1) {
         const functionName = getCamelCasedString(matches[1]);
-        return `public function test${functionName}() {\n\t\n}`;
+        return `public function test${functionName}(){\n\t\n}\n\n`;
     }
     return lineText;
 }
