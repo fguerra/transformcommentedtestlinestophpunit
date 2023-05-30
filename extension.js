@@ -51,20 +51,29 @@ function activate(context) {
 
 
 
-
+/**
+ * Gets the formatted line for a unit test
+ * @param {string} lineText Line text
+ * @returns string
+ */
 function getFormattedLineForUnitTest(lineText) {
     const regex = /(^[\t\s]*)\/\/\s?test\s(.*)/i;
     const matches = regex.exec(lineText);
     if (matches && matches.length > 2) {
         const indentation = matches[1];
         const functionName = getCamelCasedString(matches[2]);
-        return `${indentation}public function test${functionName}() {\n${indentation}\t\n${indentation}}`;
+        return `${indentation}public function test${functionName}(){\n${indentation}\t\n${indentation}}`;
     }
     return lineText;
 }
 
-function getCamelCasedString(str) {
-    const words = str.split(/\s+/);
+/**
+ * Converts a sentence to camel case
+ * @param {string} sentence Sentence to convert to camel case
+ * @returns string
+ */
+function getCamelCasedString(sentence) {
+    const words = sentence.split(/\s+/);
     const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
     return capitalizedWords.join('');
 }
@@ -72,10 +81,14 @@ function getCamelCasedString(str) {
 
 
 
-// This method is called when your extension is deactivated
+/**
+ * Deactivate method (currently does nothing)
+ */
 function deactivate() {}
 
 module.exports = {
 	activate,
-	deactivate
+	deactivate,
+	getCamelCasedString,
+	getFormattedLineForUnitTest
 }
