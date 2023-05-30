@@ -16,9 +16,11 @@ function activate(context) {
         if (editor) {
             const document = editor.document;
             const { fileName } = document;
+            let languageID = document.languageId;
+            let languageIDValidates = getLanguageIDValidates( languageID );
 
             // Check if the file is a PHP file and the name ends with "Test.php"
-            if (document.languageId === 'php' && fileName.endsWith('Test.php')) {
+            if ( languageIDValidates && fileName.endsWith('Test.php')) {
                 const transformedLines = [];
 
                 for (let lineIndex = 0; lineIndex < document.lineCount; lineIndex++) {
@@ -78,6 +80,22 @@ function getCamelCasedString(sentence) {
     return capitalizedWords.join('');
 }
 
+/**
+ * Checks if the language ID validates for this extension
+ * @param {string} languageID Language ID
+ * @returns bool
+ */
+function getLanguageIDValidates( languageID ) {
+    let lowercasedLanguageID = languageID.toLowerCase();
+    let validates = false;
+    if( lowercasedLanguageID === 'php' ) {
+        validates = true;
+    }
+    else {
+        validates = false;
+    }
+    return validates;
+}
 
 
 
@@ -90,5 +108,6 @@ module.exports = {
 	activate,
 	deactivate,
 	getCamelCasedString,
-	getFormattedLineForUnitTest
+    getFormattedLineForUnitTest,
+    getLanguageIDValidates
 }

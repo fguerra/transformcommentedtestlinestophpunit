@@ -43,5 +43,20 @@ suite('Extension Test Suite', () => {
 						'		}';
 		assert.strictEqual(result, expected);
 	});
+
+	test('getLanguageIDValidates returns false when given a language other than PHP', () => {
+		let validates = myExtension.getLanguageIDValidates("js");
+		assert.strictEqual(validates, false);
+	});
+
+	test('getLanguageIDValidates returns true when given PHP', () => {
+		let validates = myExtension.getLanguageIDValidates("php");
+		assert.strictEqual(validates, true);
+	});
+
+	test('getLanguageIDValidates returns true when given a case-insensitive PHP', () => {
+		let validates = myExtension.getLanguageIDValidates("PhP");
+		assert.strictEqual(validates, true);
+	});
 	
 });
