@@ -17,10 +17,11 @@ function activate(context) {
             const document = editor.document;
             const { fileName } = document;
             let languageID = document.languageId;
-            let languageIDValidates = getLanguageIDValidates( languageID );
+            let languageIDValidates = getLanguageIDValidates(languageID);
+            let fileNameValidates = getFileNameValidates(fileName);
 
             // Check if the file is a PHP file and the name ends with "Test.php"
-            if ( languageIDValidates && fileName.endsWith('Test.php')) {
+            if ( languageIDValidates && fileNameValidates ) {
                 const transformedLines = [];
 
                 for (let lineIndex = 0; lineIndex < document.lineCount; lineIndex++) {
@@ -97,6 +98,22 @@ function getLanguageIDValidates( languageID ) {
     return validates;
 }
 
+/**
+ * Checks if the file name is valid for this extension
+ * @param {string} fileName File name
+ * @returns bool
+ */
+function getFileNameValidates(fileName) {
+    let validates = false;
+    if (fileName.endsWith('Test.php')) {
+        validates = true;
+    }
+    else {
+        validates = false;
+    }
+    return validates;
+}
+
 
 
 /**
@@ -109,5 +126,6 @@ module.exports = {
 	deactivate,
 	getCamelCasedString,
     getFormattedLineForUnitTest,
-    getLanguageIDValidates
+    getLanguageIDValidates,
+    getFileNameValidates
 }

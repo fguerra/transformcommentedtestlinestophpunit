@@ -58,5 +58,20 @@ suite('Extension Test Suite', () => {
 		let validates = myExtension.getLanguageIDValidates("PhP");
 		assert.strictEqual(validates, true);
 	});
+
+	test('getFileNameValidates returns false when given a file name that doesnt end with Test.php', () => {
+		let validates = myExtension.getFileNameValidates("someFile.php");
+		assert.strictEqual(validates, false);
+	});
+
+	test('getFileNameValidates returns false when given a file name that doesnt end with case-sensitive Test.php', () => {
+		let validates = myExtension.getFileNameValidates("myClasstest.php");
+		assert.strictEqual(validates, false);
+	});
+
+	test('getFileNameValidates returns true when given a file name that ends with case-sensitive Test.php', () => {
+		let validates = myExtension.getFileNameValidates("myClassTest.php");
+		assert.strictEqual(validates, true);
+	});
 	
 });
