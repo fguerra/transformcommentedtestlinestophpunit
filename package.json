@@ -3,6 +3,10 @@
   "displayName": "transformcommentedtestlinestophpunit",
   "description": "Transforms commented lines that begin with //test to PHPUnit methods",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fguerra/transformcommentedtestlinestophpunit.git"
+  },
   "engines": {
     "vscode": "^1.70.0"
   },
