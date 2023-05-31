@@ -1,65 +1,67 @@
-# transformcommentedtestlinestophpunit README
+# transformcommentedtestlinestophpunit VSCode Extension
 
-This is the README for your extension "transformcommentedtestlinestophpunit". After writing up a brief description, we recommend including the following sections.
+## Table of Contents
+- [Description](#description)
+- [Features](#features)
+- [Dependencies](#dependencies)
+- [How to use](#how-to-use)
+- [Extension Settings](#extension-settings)
+- [Known Issues](#known-issues)
+- [Release Notes](#release-notes)
+- [Contributing](#contributing)
+- [License](#license)
+- [Feedback](#feedback)
+- [Acknowledgements](#acknowledgements)
+
+## Description
+The `transformcommentedtestlinestophpunit` is a Visual Studio Code extension tailored for PHP developers who use PHPUnit for testing. This extension enables a streamlined process of creating PHPUnit test methods from comments, thus making your coding and testing process faster and more efficient.
+
+The extension operates by scanning your active PHP file for any line comments starting with `//test` or `// test`. It then transforms these comments into boilerplate PHPUnit methods, laying the groundwork for your test cases. The extension is designed to only work on PHP files that end with `Test.php`, ensuring it only functions in the context of your test files.
+
+Remember to replace the method body with your test implementation to make the test meaningful.
 
 ## Features
+- Transforms `//test` or `// test` comments into PHPUnit methods quickly and efficiently.
+- Exclusive functionality for PHP files ending with `Test.php`.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## Dependencies
+The `transformcommentedtestlinestophpunit` extension depends on the following packages:
 
-For example if there is an image subfolder under your extension project workspace:
+- `@types/vscode` version `^1.70.0`
+- `@types/glob` version `^8.1.0`
+- `@types/mocha` version `^10.0.1`
+- `@types/node` version `16.x`
+- `eslint` version `^8.39.0`
+- `glob` version `^8.1.0`
+- `mocha` version `^10.2.0`
+- `typescript` version `^5.0.4`
+- `@vscode/test-electron` version `^2.3.0`
 
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## How to use
+1. Open a PHP file in Visual Studio Code that ends with `Test.php`.
+2. Add a comment line starting with `//test` or `// test` and write the name of your test function. For example: `//test should return true`
+3. Press `F1` to open the Command Palette.
+4. Start typing `Transform commented lines to PHPUnit methods` and select it.
+5. The extension will replace the `//test` comment with a PHPUnit method.
 
 ## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+This extension currently does not offer any configurable settings.
 
 ## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
+No known issues at this time.
 
 ## Release Notes
+### 0.0.1
+Initial release of transformcommentedtestlinestophpunit
 
-Users appreciate release notes as you update your extension.
+## Contributing
+If you have suggestions for improving transformcommentedtestlinestophpunit, or want to report a bug, open an issue! Contributions of all kinds are welcome.
 
-### 1.0.0
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for details.
 
-Initial release of ...
+## Feedback
+If you have any feedback, please reach out on GitHub.
 
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+## Acknowledgements
+This project follows the all-contributors specification. Contributions of any kind are welcome!
