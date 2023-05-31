@@ -9,7 +9,7 @@ const vscode = require('vscode');
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-	let disposable = vscode.commands.registerCommand('testytest.transformToUnitTest', function () {
+	let disposable = vscode.commands.registerCommand('transformcommentedtestlinestophpunit.transformToUnitTest', function () {
 		const editor = vscode.window.activeTextEditor;
 		if (editor) {
 			const document = editor.document;

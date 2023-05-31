@@ -1,28 +1,24 @@
 {
-  "name": "testytest",
-  "displayName": "testytest",
-  "description": "This is a test extension",
+  "name": "transformcommentedtestlinestophpunit",
+  "displayName": "transformcommentedtestlinestophpunit",
+  "description": "Transforms commented lines that begin with //test to PHPUnit methods",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.70.0"
   },
   "categories": [
-    "Other"
+    "Other",
+    "Snippets"
   ],
   "activationEvents": [
-    "onCommand:testytest.helloWorld",
-    "onCommand:testytest.transformToUnitTest"
+    "onCommand:transformcommentedtestlinestophpunit.transformToUnitTest"
   ],
   "main": "./extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "testytest.helloWorld",
-        "title": "Hello World"
-      },
-      {
-        "command": "testytest.transformToUnitTest",
-        "title": "Transform to Unit Test"
+        "command": "transformcommentedtestlinestophpunit.transformToUnitTest",
+        "title": "Transform commented lines to PHPUnit methods"
       }
     ]
   },
