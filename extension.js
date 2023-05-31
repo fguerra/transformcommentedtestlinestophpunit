@@ -1,9 +1,4 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
-
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -18,7 +13,6 @@ function activate(context) {
 			let languageIDValidates = getLanguageIDValidates(languageID);
 			let fileNameValidates = getFileNameValidates(fileName);
 
-			// Check if the file is a PHP file and the name ends with "Test.php"
 			if ( languageIDValidates && fileNameValidates ) {
 				const transformedLines = [];
 
@@ -41,7 +35,8 @@ function activate(context) {
 				} else {
 					vscode.window.showInformationMessage('No lines containing "//test" or "// test" found');
 				}
-			} else {
+			}
+			else {
 				vscode.window.showInformationMessage('This command can only be executed in PHP files ending with "Test.php"');
 			}
 		}
@@ -49,8 +44,6 @@ function activate(context) {
 
 	context.subscriptions.push(disposable);
 }
-
-
 
 /**
  * Gets the formatted line for a unit test
@@ -111,8 +104,6 @@ function getFileNameValidates(fileName) {
 	}
 	return validates;
 }
-
-
 
 /**
  * Deactivate method (currently does nothing)
