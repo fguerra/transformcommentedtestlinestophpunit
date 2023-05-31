@@ -44,6 +44,41 @@ The `transformcommentedtestlinestophpunit` extension depends on the following pa
 4. Start typing `Transform commented lines to PHPUnit methods` and select it.
 5. The extension will replace the `//test` comment with a PHPUnit method.
 
+## Example
+Input
+```
+<?php
+use PHPUnit\Framework\TestCase;
+
+final class UserTest extends TestCase{
+	//test get name returns an empty string by default
+	//test set name returns true
+	//test get name returns the expected value
+	//test getname returns a string
+}
+```
+
+Output
+```
+<?php
+use PHPUnit\Framework\TestCase;
+
+final class UserTest extends TestCase{
+	public function testGetNameReturnsAnEmptyStringByDefault(){
+		
+	}
+	public function testSetNameReturnsTrue(){
+		
+	}
+	public function testGetNameReturnsTheExpectedValue(){
+		
+	}
+	public function testGetnameReturnsAString(){
+		
+	}
+}
+```
+
 ## Extension Settings
 This extension currently does not offer any configurable settings.
 
