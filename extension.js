@@ -9,47 +9,47 @@ const vscode = require('vscode');
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-    console.log('Congratulations, your extension "testytest" is now active!');
+	console.log('Congratulations, your extension "testytest" is now active!');
 
-    let disposable = vscode.commands.registerCommand('testytest.transformToUnitTest', function () {
-        const editor = vscode.window.activeTextEditor;
-        if (editor) {
-            const document = editor.document;
-            const { fileName } = document;
-            let languageID = document.languageId;
-            let languageIDValidates = getLanguageIDValidates(languageID);
-            let fileNameValidates = getFileNameValidates(fileName);
+	let disposable = vscode.commands.registerCommand('testytest.transformToUnitTest', function () {
+		const editor = vscode.window.activeTextEditor;
+		if (editor) {
+			const document = editor.document;
+			const { fileName } = document;
+			let languageID = document.languageId;
+			let languageIDValidates = getLanguageIDValidates(languageID);
+			let fileNameValidates = getFileNameValidates(fileName);
 
-            // Check if the file is a PHP file and the name ends with "Test.php"
-            if ( languageIDValidates && fileNameValidates ) {
-                const transformedLines = [];
+			// Check if the file is a PHP file and the name ends with "Test.php"
+			if ( languageIDValidates && fileNameValidates ) {
+				const transformedLines = [];
 
-                for (let lineIndex = 0; lineIndex < document.lineCount; lineIndex++) {
-                    const line = document.lineAt(lineIndex);
-                    const transformedLine = getFormattedLineForUnitTest(line.text);
-                    if (transformedLine !== line.text) {
-                        transformedLines.push({ lineIndex, transformedLine });
-                    }
-                }
+				for (let lineIndex = 0; lineIndex < document.lineCount; lineIndex++) {
+					const line = document.lineAt(lineIndex);
+					const transformedLine = getFormattedLineForUnitTest(line.text);
+					if (transformedLine !== line.text) {
+						transformedLines.push({ lineIndex, transformedLine });
+					}
+				}
 
-                if (transformedLines.length > 0) {
-                    const edit = new vscode.WorkspaceEdit();
-                    transformedLines.forEach(({ lineIndex, transformedLine }) => {
-                        const line = document.lineAt(lineIndex);
-                        edit.replace(document.uri, line.range, transformedLine);
-                    });
-                    vscode.workspace.applyEdit(edit);
-                    vscode.window.showInformationMessage(`Transformed ${transformedLines.length} line(s) to PHP unit test functions`);
-                } else {
-                    vscode.window.showInformationMessage('No lines containing "//test" or "// test" found');
-                }
-            } else {
-                vscode.window.showInformationMessage('This command can only be executed in PHP files ending with "Test.php"');
-            }
-        }
-    });
+				if (transformedLines.length > 0) {
+					const edit = new vscode.WorkspaceEdit();
+					transformedLines.forEach(({ lineIndex, transformedLine }) => {
+						const line = document.lineAt(lineIndex);
+						edit.replace(document.uri, line.range, transformedLine);
+					});
+					vscode.workspace.applyEdit(edit);
+					vscode.window.showInformationMessage(`Transformed ${transformedLines.length} line(s) to PHP unit test functions`);
+				} else {
+					vscode.window.showInformationMessage('No lines containing "//test" or "// test" found');
+				}
+			} else {
+				vscode.window.showInformationMessage('This command can only be executed in PHP files ending with "Test.php"');
+			}
+		}
+	});
 
-    context.subscriptions.push(disposable);
+	context.subscriptions.push(disposable);
 }
 
 
@@ -60,14 +60,14 @@ function activate(context) {
  * @returns string
  */
 function getFormattedLineForUnitTest(lineText) {
-    const regex = /(^[\t\s]*)\/\/\s?test\s(.*)/i;
-    const matches = regex.exec(lineText);
-    if (matches && matches.length > 2) {
-        const indentation = matches[1];
-        const functionName = getCamelCasedString(matches[2]);
-        return `${indentation}public function test${functionName}(){\n${indentation}\t\n${indentation}}`;
-    }
-    return lineText;
+	const regex = /(^[\t\s]*)\/\/\s?test\s(.*)/i;
+	const matches = regex.exec(lineText);
+	if (matches && matches.length > 2) {
+		const indentation = matches[1];
+		const functionName = getCamelCasedString(matches[2]);
+		return `${indentation}public function test${functionName}(){\n${indentation}\t\n${indentation}}`;
+	}
+	return lineText;
 }
 
 /**
@@ -76,9 +76,9 @@ function getFormattedLineForUnitTest(lineText) {
  * @returns string
  */
 function getCamelCasedString(sentence) {
-    const words = sentence.split(/\s+/);
-    const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
-    return capitalizedWords.join('');
+	const words = sentence.split(/\s+/);
+	const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+	return capitalizedWords.join('');
 }
 
 /**
@@ -87,15 +87,15 @@ function getCamelCasedString(sentence) {
  * @returns bool
  */
 function getLanguageIDValidates( languageID ) {
-    let lowercasedLanguageID = languageID.toLowerCase();
-    let validates = false;
-    if( lowercasedLanguageID === 'php' ) {
-        validates = true;
-    }
-    else {
-        validates = false;
-    }
-    return validates;
+	let lowercasedLanguageID = languageID.toLowerCase();
+	let validates = false;
+	if( lowercasedLanguageID === 'php' ) {
+		validates = true;
+	}
+	else {
+		validates = false;
+	}
+	return validates;
 }
 
 /**
@@ -104,14 +104,14 @@ function getLanguageIDValidates( languageID ) {
  * @returns bool
  */
 function getFileNameValidates(fileName) {
-    let validates = false;
-    if (fileName.endsWith('Test.php')) {
-        validates = true;
-    }
-    else {
-        validates = false;
-    }
-    return validates;
+	let validates = false;
+	if (fileName.endsWith('Test.php')) {
+		validates = true;
+	}
+	else {
+		validates = false;
+	}
+	return validates;
 }
 
 
@@ -125,7 +125,7 @@ module.exports = {
 	activate,
 	deactivate,
 	getCamelCasedString,
-    getFormattedLineForUnitTest,
-    getLanguageIDValidates,
-    getFileNameValidates
+	getFormattedLineForUnitTest,
+	getLanguageIDValidates,
+	getFileNameValidates
 }
